@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "726878523125",
+    "project_id": "jawify-f7c9e",
+    "storage_bucket": "jawify-f7c9e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726878523125:android:85aab34e9543ed5584bfbc",
+        "android_client_info": {
+          "package_name": "com.example.jawify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726878523125-r7d8eukgbfdb70u6u37vrsuatpkhpe24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jawify",
+            "certificate_hash": "3f8394b1bbced6cec6e34662070fb3790e805c29"
+          }
+        },
+        {
+          "client_id": "726878523125-3eqlkrgifbagn677v2io4pf2v3i88b60.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvEb4OKUNnGiMhyLDhCycwkUn32dIm7JI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726878523125-3eqlkrgifbagn677v2io4pf2v3i88b60.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "726878523125-iektvbmesds9nr9vus8usjs5m429d399.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jawify"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
