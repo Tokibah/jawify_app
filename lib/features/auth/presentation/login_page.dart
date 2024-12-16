@@ -6,6 +6,7 @@ import 'package:jawify/core/auth_service.dart';
 import 'package:jawify/features/auth/widget/auto_box.dart';
 import 'package:jawify/features/auth/widget/login_box.dart';
 import 'package:jawify/core/textfield.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -26,6 +27,19 @@ class _LoginPageState extends State<LoginPage> {
   final _emailCon = TextEditingController();
   final _passCon = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  void nofiPermi() async {
+    final status = await Permission.notification.status;
+
+    if (status.isDenied || status.isRestricted) {
+      await Permission.notification.request();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -133,18 +147,15 @@ class _LoginPageState extends State<LoginPage> {
                             ]),
                         SizedBox(
                           width: double.infinity,
-                          child: Wrap(
-                              alignment: WrapAlignment.center,
-                              children: [
-                                LoginBox(
-                                    logo: "assets/images/logo_apple.png",
-                                    login: () =>
-                                        AuthService.loginApple(context)),
-                                LoginBox(
-                                    logo: "assets/images/logo_google.png",
-                                    login: () =>
-                                        AuthService.loginGoogle(context))
-                              ]),
+                          child:
+                              Wrap(alignment: WrapAlignment.center, children: [
+                            LoginBox(
+                                logo: "assets/images/logo_apple.png",
+                                login: () => AuthService.loginApple(context)),
+                            LoginBox(
+                                logo: "assets/images/logo_google.png",
+                                login: () => AuthService.loginGoogle(context))
+                          ]),
                         )
                       ]),
                     ),

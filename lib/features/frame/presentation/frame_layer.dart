@@ -137,62 +137,67 @@ class _FrameLayerState extends State<FrameLayer> {
   Widget build(BuildContext context) {
     return player != null
         ? Scaffold(
-            body: Stack(children: [
-            PageView(
-              controller: pageController,
-              onPageChanged: (index) => _currentPageview.value = index,
-              children: [
-                LevelPage(level: player!.level, user: player!),
-                const QuizPage(),
-                const RankingPage(),
-                const ShopPage(),
-                ProfilePage(
-                    username: player!.username,
-                    email: player!.email,
-                    date: player!.date)
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Topbar(
-                      streak: player!.streak,
-                      gem: player!.gem,
-                      life: player!.life)),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                            height: 60,
-                            width: 60,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(context,
-                                      SlideRoute(page: const DictionaryPage()));
-                                },
-                                child: const Icon(Icons.book))),
-                      ),
-                      BottomBar(
-                        pageNotifier: _currentPageview,
-                        onPageSelected: (index) {
-                          pageController.animateToPage(index,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeIn);
-                        },
-                      ),
-                    ]),
+            body: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Stack(children: [
+              PageView(
+                controller: pageController,
+                onPageChanged: (index) => _currentPageview.value = index,
+                children: [
+                  LevelPage(level: player!.level, user: player!),
+                  const QuizPage(),
+                  const RankingPage(),
+                  const ShopPage(),
+                  ProfilePage(
+                      username: player!.username,
+                      email: player!.email,
+                      date: player!.date)
+                ],
               ),
-            )
-          ]))
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Topbar(
+                        streak: player!.streak,
+                        gem: player!.gem,
+                        life: player!.life)),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                              height: 60,
+                              width: 60,
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        SlideRoute(
+                                            page: const DictionaryPage()));
+                                  },
+                                  child: const Icon(Icons.book))),
+                        ),
+                        BottomBar(
+                          pageNotifier: _currentPageview,
+                          onPageSelected: (index) {
+                            pageController.animateToPage(index,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeIn);
+                          },
+                        ),
+                      ]),
+                ),
+              )
+            ]),
+          ))
         : const Center(
             child: SpinKitFadingCube(color: Colors.amber, size: 50),
           );
