@@ -107,9 +107,15 @@ class AuthService {
     context.loaderOverlay.show();
     try {
       await auth.sendPasswordResetEmail(email: email);
-      showMsg(context, "Password reset email has been sent");
+      showMsg(context, "Emel untuk menggubah kata laluan telah dihantar");
     } on FirebaseAuthException catch (e) {
-      showMsg(context, e.code.toString());
+      if (e.code == "invalid-email") {
+        showMsg(context, "Emel tidak sah");
+      } else if (e.code == "channel-error") {
+        showMsg(context, "Sila masukkan emel");
+      } else {
+        showMsg(context, e.code.toString());
+      }
     }
     context.loaderOverlay.hide();
   }

@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jawify/core/theme.dart';
@@ -29,6 +30,8 @@ class _InGamePageState extends State<InGamePage> {
   List<String> currAns = [];
   String? selectedOption;
   List<String> selectedOrder = [];
+  bool isSnack = false;
+  final _audioPlayer = AudioPlayer();
 
   void showContent() {
     showDialog(
@@ -182,11 +185,19 @@ class _InGamePageState extends State<InGamePage> {
   }
 
   void showMess(bool iscorrect, String ans) {
+    setState(() {
+      isSnack = true;
+    });
+
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       duration: const Duration(days: 1),
       action: SnackBarAction(
         label: "BAIK!",
         onPressed: () {
+          setState(() {
+            isSnack = false;
+          });
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           if (queIndex >= widget.level.quesList.length - 1) {
             completeGame();
           } else {
@@ -198,10 +209,18 @@ class _InGamePageState extends State<InGamePage> {
       content: Text(
         iscorrect
             ? "JAWAPAN BETUL!"
-            : "JAWAPAN SALAH\njawanpan yang betul adalah ${ans.toString()}",
+            : "JAWAPAN SALAH\njawapan yang betul adalah ${ans.toString()}",
         style: const TextStyle(fontSize: 30),
       ),
     ));
+  }
+
+  void playWrong() {
+    _audioPlayer.play(AssetSource("audios/wrong.wav"));
+  }
+
+  void playCorrect() {
+    _audioPlayer.play(AssetSource("audios/correct.wav"));
   }
 
   void checkChoose(String an) {
@@ -211,8 +230,10 @@ class _InGamePageState extends State<InGamePage> {
 
     currAns.add(an);
     if (const ListEquality().equals(currAns, question!.ans)) {
+      playCorrect();
       showMess(true, '');
     } else {
+      playWrong();
       showMess(false, question!.ans.toString());
       currLife--;
     }
@@ -231,8 +252,10 @@ class _InGamePageState extends State<InGamePage> {
 
     if (selectedOrder.length == question!.ans.length) {
       if (const ListEquality().equals(selectedOrder, question!.ans)) {
+        playCorrect();
         showMess(true, '');
       } else {
+        playWrong();
         showMess(false, question!.ans.toString());
         currLife--;
       }
@@ -249,7 +272,7 @@ class _InGamePageState extends State<InGamePage> {
       appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                Navigator.pop(context, currLife);
+                if (!isSnack) Navigator.pop(context, currLife);
               },
               icon: const Icon(Icons.arrow_back)),
           title: Text(widget.level.title),
@@ -266,75 +289,78 @@ class _InGamePageState extends State<InGamePage> {
               ]),
             ),
           ]),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(children: [
-            Text(
-              question!.type == "choose"
-                  ? "Pilih jawapan yang betul"
-                  : "Tekan jawapan mengikut urutan yang betul",
-              style: const TextStyle(fontSize: 20),
-            ),
-            SizedBox(
-              height: 200,
-              child: Center(
-                child: Wrap(children: [
-                  for (var q in question!.que)
-                    Container(
-                      height: 100,
-                      width: 120,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: mainColor),
-                      child: Center(
-                        child: Text(
-                          q,
-                          style: const TextStyle(fontSize: 30),
-                        ),
-                      ),
-                    ),
-                ]),
+      body: AbsorbPointer(
+        absorbing: isSnack,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(children: [
+              Text(
+                question!.type == "choose"
+                    ? "Pilih jawapan yang betul"
+                    : "Tekan jawapan mengikut urutan yang betul",
+                style: const TextStyle(fontSize: 20),
               ),
-            ),
-            Center(
-              child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: [
-                    for (var o in question!.opt)
-                      InkWell(
-                        onTap: () {
-                          question!.type == "choose"
-                              ? checkChoose(o)
-                              : checkOrder(o);
-                        },
-                        child: Container(
-                          height: 150,
-                          width: 170,
-                          decoration: BoxDecoration(
+              SizedBox(
+                height: 200,
+                child: Center(
+                  child: Wrap(children: [
+                    for (var q in question!.que)
+                      Container(
+                        height: 100,
+                        width: 120,
+                        decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: question!.type == "choose"
-                                ? (selectedOption == o
-                                    ? Colors.green
-                                    : Colors.grey) // Green for single choice
-                                : (selectedOrder.contains(o)
-                                    ? Colors.green
-                                    : Colors.grey), // Green for order
-                            border: Border.all(),
-                          ),
-                          child: Center(
-                            child: Text(
-                              o,
-                              style: const TextStyle(fontSize: 60),
-                            ),
+                            color: mainColor),
+                        child: Center(
+                          child: Text(
+                            q,
+                            style: const TextStyle(fontSize: 30),
                           ),
                         ),
                       ),
                   ]),
-            )
-          ]),
+                ),
+              ),
+              Center(
+                child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: [
+                      for (var o in question!.opt)
+                        InkWell(
+                          onTap: () {
+                            question!.type == "choose"
+                                ? checkChoose(o)
+                                : checkOrder(o);
+                          },
+                          child: Container(
+                            height: 150,
+                            width: 170,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: question!.type == "choose"
+                                  ? (selectedOption == o
+                                      ? Colors.green
+                                      : Colors.grey)
+                                  : (selectedOrder.contains(o)
+                                      ? Colors.green
+                                      : Colors.grey),
+                              border: Border.all(),
+                            ),
+                            child: Center(
+                              child: Text(
+                                o,
+                                style: const TextStyle(fontSize: 60),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ]),
+              )
+            ]),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

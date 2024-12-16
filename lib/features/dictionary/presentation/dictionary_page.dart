@@ -12,12 +12,11 @@ class DictionaryPage extends StatefulWidget {
 }
 
 class _DictionaryPageState extends State<DictionaryPage> {
-  final _audioplayer = AudioPlayer();
   List<DictionaryButton> buttonList = [];
 
   void playAudio(String source) {
-    _audioplayer.stop();
-    _audioplayer.play(AssetSource(source));
+    final player = AudioPlayer();
+    player.play(AssetSource(source));
   }
 
   void getButton() async {
@@ -32,17 +31,14 @@ class _DictionaryPageState extends State<DictionaryPage> {
   }
 
   @override
-  void dispose() {
-    _audioplayer.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("Huruf Jawi"),
+        ),
         body: GridView.count(
           crossAxisCount: 3,
           children: List.generate(buttonList.length, (index) {
@@ -70,7 +66,8 @@ class _DictionaryPageState extends State<DictionaryPage> {
                 child: Center(
                     child: Text(
                   button.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 50),
                 )),
               ),
             );

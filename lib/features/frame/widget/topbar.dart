@@ -30,22 +30,25 @@ class Topbar extends StatelessWidget {
       ]);
     }
 
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-        color: themeProvider.themeData.brightness == Brightness.light
-            ? ThemeProvider.lightBack.withBlue(160)
-            : ThemeProvider.darkBack.withBlue(50),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40),
+          color: themeProvider.themeData.brightness == Brightness.light
+              ? ThemeProvider.lightBack.withBlue(160)
+              : ThemeProvider.darkBack.withBlue(50),
+        ),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          topIcon(
+              icon: Icons.local_fire_department,
+              number: streak,
+              color: Colors.orange),
+          topIcon(icon: Icons.diamond, number: gem, color: Colors.blue),
+          topIcon(icon: Icons.local_hospital, number: life, color: Colors.red)
+        ]),
       ),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        topIcon(
-            icon: Icons.local_fire_department,
-            number: streak,
-            color: Colors.orange),
-        topIcon(icon: Icons.diamond, number: gem, color: Colors.blue),
-        topIcon(icon: Icons.local_hospital, number: life, color: Colors.red)
-      ]),
     );
   }
 }

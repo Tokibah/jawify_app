@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jawify/core/theme.dart';
@@ -54,24 +53,17 @@ class Jawify extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
-    return ScreenUtilInit(
-      designSize: const Size(412, 732),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (_, child) {
-        return GlobalLoaderOverlay(
-          overlayWidgetBuilder: (progress) {
-            return const Center(
-              child: SpinKitFadingCube(color: Colors.amber, size: 50),
-            );
-          },
-          overlayColor: Colors.grey,
-          child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: Provider.of<ThemeProvider>(context).themeData,
-              home: user == null ? const LoginPage() : const FrameLayer()),
+    return GlobalLoaderOverlay(
+      overlayWidgetBuilder: (progress) {
+        return const Center(
+          child: SpinKitFadingCube(color: Colors.amber, size: 50),
         );
-      }
+      },
+      overlayColor: Colors.grey,
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: Provider.of<ThemeProvider>(context).themeData,
+          home: user == null ? const LoginPage() : const FrameLayer()),
     );
   }
 }

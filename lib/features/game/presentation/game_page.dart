@@ -30,8 +30,8 @@ class QuizPage extends StatelessWidget {
               "https://images.vexels.com/content/3534/preview/colorful-abstract-design-background-23b0c0.png",
           color: mainColor,
           ontap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const FlashCardPage()));
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const FlashCardPage()));
           },
         ),
         GameBox(ontap: () {}),

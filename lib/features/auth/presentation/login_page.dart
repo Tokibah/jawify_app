@@ -103,12 +103,10 @@ class _LoginPageState extends State<LoginPage> {
                                       ? AuthService.login(context,
                                           _emailCon.text, _passCon.text)
                                       : AuthService.createUser(
-                                         
                                           context,
                                           _usernameCon.text,
                                           _emailCon.text,
-                                          _passCon.text
-                                          );
+                                          _passCon.text);
                                 }
                               },
                               child: Text(
@@ -133,16 +131,21 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               )
                             ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              LoginBox(
-                                  logo: "assets/images/logo_apple.png",
-                                  login: () => AuthService.loginApple(context)),
-                              LoginBox(
-                                  logo: "assets/images/logo_google.png",
-                                  login: () => AuthService.loginGoogle(context))
-                            ])
+                        SizedBox(
+                          width: double.infinity,
+                          child: Wrap(
+                              alignment: WrapAlignment.center,
+                              children: [
+                                LoginBox(
+                                    logo: "assets/images/logo_apple.png",
+                                    login: () =>
+                                        AuthService.loginApple(context)),
+                                LoginBox(
+                                    logo: "assets/images/logo_google.png",
+                                    login: () =>
+                                        AuthService.loginGoogle(context))
+                              ]),
+                        )
                       ]),
                     ),
                   ),

@@ -50,7 +50,7 @@ class _FrameLayerState extends State<FrameLayer> {
                     ),
                   ),
                   const Text(
-                    "AKTIFKAN EMEL ANDA: Mengaktifkan emel anda adalah penting untuk mendapatkan kata laluan sekiranya anda terlupa, jika sudah sila reset aplikasi",
+                    "Pautan pengaktifan emel telah dihantar ke emel anda\njika sudah sila reset aplikasi",
                     style: TextStyle(fontSize: 20),
                     textAlign: TextAlign.center,
                   ),
@@ -69,9 +69,9 @@ class _FrameLayerState extends State<FrameLayer> {
                   width: 200,
                   child: ElevatedButton(
                       onPressed: () async {
+                        Navigator.of(context).pop();
                         await FirebaseAuth.instance.currentUser
                             ?.sendEmailVerification();
-                        Navigator.of(context).pop();
                       },
                       child: const Text(
                         "Minta pautan",
@@ -110,9 +110,9 @@ class _FrameLayerState extends State<FrameLayer> {
       DateTime lastDate = DateTime.parse(lastLoginDate);
       if (DateFormat('yyyy-MM-dd').format(lastDate) != today) {
         if (now.difference(lastDate).inDays == 1) {
-          await Player.updateDaily(player!.streak + 1, player!.life);
+          await Player.updateDaily(player!.streak + 1, 5);
         } else {
-          await Player.updateDaily(1, player!.life);
+          await Player.updateDaily(1, 5);
         }
         await prefs.setString("LoginKey", today);
       }
@@ -125,9 +125,10 @@ class _FrameLayerState extends State<FrameLayer> {
   void initState() {
     listenToAuthChanges();
     getData();
-    checkDailyLogin();
+
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      checkDailyLogin();
       emailVerifyNofi();
     });
   }

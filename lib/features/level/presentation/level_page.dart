@@ -82,14 +82,16 @@ class _LevelPageState extends State<LevelPage> {
                                       content: Text("Tiada nyawa")));
                             } else if (widget.level[0] >= chapter!.chapter ||
                                 widget.level[1] >= i) {
-                              await Navigator.push(
+                              int? templife = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => InGamePage(
                                           level: chapter!.levelList[i],
                                           currprog: [chapIndex, i],
                                           player: widget.user)));
-
+                              if (templife != null) {
+                                await Player.updatelife(templife);
+                              }
                               await Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
