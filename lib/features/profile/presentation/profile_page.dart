@@ -118,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   const Text(
-                    "Sekiranya ada masalah sila laporkan ke kumpulan kami\nMuhammad Shahizz Ifwat\n\n",
+                    "Sekiranya ada masalah sila laporkan ke kumpulan kami\nMuhammad Shahizz Ifwat\nAriff Iskandar\nAzfar",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 15),
                   )
