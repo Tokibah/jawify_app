@@ -1,16 +1,11 @@
-# jawify
+# Jawify
 
-A new Flutter project.
+Jawify is a modern, interactive learning app designed to make learning Jawi exciting and accessible for teenagers. Inspired by the style of Duolingo, Jawify combines gamified lessons, bite-sized quizzes, and daily practice goals — but with a unique focus on mastering the Jawi script.
 
-## Getting Started
+With a calming yet fun design, Jawify keeps young learners engaged without overwhelming them. Whether you're a beginner or brushing up your skills, Jawify turns traditional Jawi learning into an enjoyable digital journey.
 
-This project is a starting point for a Flutter application.
+## Proposal
+[JAWIFY Proposal Pertandingan Aplikasi Jawi.pdf](https://github.com/user-attachments/files/19852881/JAWIFY_Proposal_Pertandingan_Aplikasi_Jawi.1.pdf)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Demo Video
+https://youtu.be/2Hzt4olcdsM
